@@ -35,8 +35,6 @@ dotenv.config();
 
 const app = express();
 
-
-
 // Define a custom token for requestId
 morgan.token("id", (req) => req.requestId);
 
@@ -88,7 +86,7 @@ app.use(
         connectSrc: ["'self'"], // Restricts API fetch/XHR requests to your own domain
       },
     },
-  })
+  }),
 );
 
 app.use(
@@ -98,6 +96,15 @@ app.use(requestLogger);
 app.use(responseFormatter);
 
 // Routes
+// Add this near your other basic routes
+app.get("/", (req, res) => {
+  res
+    .status(200)
+    .json({
+      status: "success",
+      message: "Kindness App Backend is running smoothly!",
+    });
+});
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/admin", adminRoutes);
@@ -124,8 +131,6 @@ app.use(notFound);
 app.use(errorHandler);
 
 export default app;
-
-
 
 /**
  Purpose:
