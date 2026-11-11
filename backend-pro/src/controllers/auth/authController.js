@@ -7,10 +7,20 @@ import Token from "../../models/auth/Token.js";
 // Cookie security options helper
 const cookieOptions = {
   httpOnly: true,
+  secure: process.env.NODE_ENV === "production",
+  sameSite:
+    process.env.NODE_ENV === "production"
+      ? "none"
+      : "lax",
+};
+
+/*
+const cookieOptions = {
+  httpOnly: true,
   secure: true, // Required when sameSite is 'none'
   sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
 };
-/*
+*
 const cookieOptions = {
   httpOnly: true,
   secure: process.env.NODE_ENV === "production",
